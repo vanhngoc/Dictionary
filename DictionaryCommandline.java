@@ -1,18 +1,14 @@
+import java.util.ArrayList;
+
 public class DictionaryCommandline {
-    Dictionary dictionary = new Dictionary();
 
-    public void display(int i) {
-        System.out.print(i);
-        System.out.print("\t" + dictionary.wordList.get(i).getWord_explain());
-        System.out.print("\t" + dictionary.wordList.get(i).getWord_explain());
-    }
+    public void showAllWords(ArrayList<Word> wordList) {
+        System.out.print("N0\t" + "|English\t" + "| " + "Vietnamese" + "\n");
+        for (int i = 0; i < wordList.size(); i++) {
+            System.out.print(i + 1);
+            System.out.print("\t|" + wordList.get(i).getWord_target() + "\t");
+            System.out.print("\t" + wordList.get(i).getWord_explain() + "\n");
 
-    public void showAllWords() {
-        System.out.println("N0\t" + "|English\t" + "| " +
-                "Vietnamese");
-        for (int i = 0; i < dictionary.wordList.size(); i++) {
-            display(i);
-            System.out.println();
         }
     }
 }

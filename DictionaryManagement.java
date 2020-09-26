@@ -6,10 +6,10 @@ public class DictionaryManagement {
 
     public ArrayList<Word> insertFromCommandline() {
         Scanner scanner = new Scanner(System.in);
-        Word word = new Word();
         Dictionary dictionary = new Dictionary();
         int numberWords = scanner.nextInt();
         while (0 != numberWords) {
+            Word word = new Word();
             System.out.println("Nhap tu tieng anh : ");
             word.setWord_target(scanner.next());
 
@@ -21,22 +21,5 @@ public class DictionaryManagement {
         return dictionary.wordList;
     }
 
-    public static void main(String[] args) {
-
-        DictionaryManagement dicMan = new DictionaryManagement();
-        Word word = new Word();
-        Dictionary dictionary = new Dictionary();
-        dictionary.setWordList(dicMan.insertFromCommandline());
-        for (int i = 0; i < dictionary.getWordList().size(); i++) {
-//            word = dictionary.getWordList().get(i);
-            System.out.println(dictionary.getWordList());
-            System.out.println(word.getWord_target() + "\t" + word.getWord_explain());
-        }
-
-
-
-
-
-
-    }
 }
+
