@@ -1,6 +1,9 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class DictionaryManagement {
 
@@ -22,5 +25,18 @@ public class DictionaryManagement {
         return dictionary.wordList;
     }
 
+    public void insertfromFile() throws IOException {
+        File file = new File("dictionaries.txt");
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        FileInputStream fileInputStream = new FileInputStream(file);
+        int c = fileInputStream.read();
+        while (c!=-1){
+            System.out.print((char)c);
+            c=fileInputStream.read();
+        }
+        fileInputStream.close();
+    }
 }
 
