@@ -25,11 +25,7 @@ public class DictionaryManagement {
         return dictionary.wordList;
     }
 
-    public void insertfromFile() throws IOException {
-        File file = new File("dictionaries.txt");
-        if (!file.exists()) {
-            file.createNewFile();
-        }
+    public void insertfromFile(File file) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(file);
         int c = fileInputStream.read();
         while (c!=-1){
