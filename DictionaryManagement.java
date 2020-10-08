@@ -1,38 +1,83 @@
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.File;
+
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class DictionaryManagement {
 
-    public ArrayList<Word> insertFromCommandline() {
-        Scanner scanner = new Scanner(System.in);
-        Dictionary dictionary = new Dictionary();
-        int numberWords = scanner.nextInt();
-        scanner.nextLine();
-        while (0 != numberWords) {
-            Word word = new Word();
-            System.out.println("Nhap tu tieng anh : ");
-            word.setWord_target(scanner.nextLine());
+    final static int exsit = 0,
+            notFull = -1,
+            ok = 1,
+            noExsit = 2;
+    public static TreeMap treeMap = new TreeMap<String, Word>();
+    private Word word;
 
-            System.out.println("Nhap giai thich sang tieng viet");
-            word.setWord_explain(scanner.nextLine());
-            dictionary.wordList.add(word);
-            numberWords--;
+
+
+    public void insertFromFile() {
+        try {
+            Scanner read = new Scanner(new FileInputStream("dictionaries.dat"));
+            String line;
+
+            while (read.hasNextLine()) {
+                line = read.nextLine();
+                if (!line.contains("#")) {
+                    this.splitWordAndAddToTree(line);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return dictionary.wordList;
     }
 
-    public void insertfromFile(File file) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream(file);
-        int c = fileInputStream.read();
-        while (c!=-1){
-            System.out.print((char)c);
-            c=fileInputStream.read();
+    public void splitWordAndAddToTree(String line) {
+        String[] Str = line.split("\\|");
+        // StringTokenizer str = new StringTokenizer(line, "|");
+
+        String key = Str[0];
+        String value = Str[1];
+        key = key.trim();
+        value = value.trim();
+
+        word = new Word(key, value);
+        treeMap.put(key.toLowerCase(), value.toLowerCase());
+
+    }
+
+
+    public int addWord(Word word, TreeMap<String, String> treeMap) {
+        if ((word.getWord_target().compareTo("") == 0) ||
+                (word.getWord_explain().compareTo("") == 0)) {
+            return notFull;
+        } else {
+            if (treeMap.containsKey(word.getWord_target())) {
+                return exsit;
+            } else {
+                String target = word.getWord_target().toLowerCase();
+                String explain = word.getWord_explain().toLowerCase();
+                treeMap.put(target, explain);
+                return ok;
+            }
         }
-        fileInputStream.close();
+    }
+
+    public void deleteWord(String word) {
+        treeMap.remove(word);
+    }
+
+    public void editWord(Word word) {
+        treeMap.put(word.getWord_target().toLowerCase(), word);
+
+    }
+
+    public static void searchWord(String word) {
+        Set<String> keySet = treeMap.keySet();
+        for (String key : keySet) {
+            if(word.equals(key)){
+                System.out.println(treeMap.get(key));
+            }
+        }
     }
 }
 
